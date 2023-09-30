@@ -1,21 +1,21 @@
 import { useMemo } from 'react'
 import { useContextSelector } from 'use-context-selector'
-import { TransactionsContext } from '../contexts/TransactionContext'
+import { SimulatorContext } from '../contexts/SimulatorContext'
 
 export function useSumary() {
-  const transactions = useContextSelector(TransactionsContext, (context) => {
+  const transactions = useContextSelector(SimulatorContext, (context) => {
     return context.transactions
   })
 
   const sumary = useMemo(() => {
     return transactions.reduce(
       (acc, transaction) => {
-        if (transaction.type === 'income') {
-          acc.income += transaction.price
-          acc.total += transaction.price
+        if (transaction.rentalProperty === 'sim') {
+          acc.income += transaction.equityAmount
+          acc.total += transaction.equityAmount
         } else {
-          acc.outcome += transaction.price
-          acc.total -= transaction.price
+          acc.outcome += transaction.equityAmount
+          acc.total -= transaction.equityAmount
         }
 
         return acc

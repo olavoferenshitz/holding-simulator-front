@@ -4,41 +4,50 @@
       "id": 1,
       "description": "Desenvolvimento de site",
       "type": "income",
-      "category": "Venda",
-      "price": 14000,
+      "email": "Venda",
+      "equityAmount": 14000,
       "createdAt": "2023-07-31T16:45:51.244Z"
     },
     {
       "id": 2,
       "description": "Hamburguer",
       "type": "outcome",
-      "category": "Alimentação",
-      "price": 50,
+      "email": "Alimentação",
+      "equityAmount": 50,
       "createdAt": "2023-07-31T16:01:51.244Z"
     },
     {
       "description": "Desenvolvimento de app",
-      "price": 10000,
-      "category": "Venda",
+      "equityAmount": 10000,
+      "email": "Venda",
       "type": "income",
       "createdAt": "2023-07-31T19:41:33.719Z",
       "id": 3
     },
     {
       "description": "Desenvolvimento de app",
-      "price": 10000,
-      "category": "Venda",
+      "equityAmount": 10000,
+      "email": "Venda",
       "type": "income",
       "createdAt": "2023-07-31T19:41:38.403Z",
       "id": 4
     },
     {
       "description": "Iogurte",
-      "price": 5,
-      "category": "Alimentação",
+      "equityAmount": 5,
+      "email": "Alimentação",
       "type": "outcome",
       "createdAt": "2023-07-31T19:55:07.139Z",
       "id": 5
+    },
+    {
+      "description": "Desenvolvimento de app",
+      "equityAmount": 10000,
+      "email": "Alimentação",
+      "rentalProperty": "income",
+      "state": "title",
+      "createdAt": "2023-09-28T23:14:54.784Z",
+      "id": 6
     }
   ]
 }
