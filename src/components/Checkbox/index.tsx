@@ -1,4 +1,4 @@
-import React, { InputHTMLAttributes } from 'react'
+import { InputHTMLAttributes } from 'react'
 import { Input, Label, Indicator } from './styles'
 
 interface CheckboxProps extends InputHTMLAttributes<HTMLInputElement> {

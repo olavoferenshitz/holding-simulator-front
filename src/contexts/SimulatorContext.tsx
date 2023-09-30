@@ -89,7 +89,7 @@ export function SimulatorProvider({ children }: TransactionsProviderProps) {
         console.log(error.message)
         if (
           error.message === 'Network Error' ||
-          error.message.incudles('status code 500')
+          error.message.includes('status code 500')
         ) {
           alert('Estamos com problemas, tente novamente mais tarde.')
         }
