@@ -39,12 +39,12 @@ const newTransactionFormSchema = z.object({
 type newTransactionFormInputs = z.infer<typeof newTransactionFormSchema>
 
 export function StepForm() {
-  const { currrentStep, setCurrrentStep, createTransaction } =
+  const { currrentStep, setCurrrentStep, createSimulation } =
     useContextSelector(SimulatorContext, (context) => {
       return {
         currrentStep: context.currrentStep,
         setCurrrentStep: context.setCurrrentStep,
-        createTransaction: context.createTransaction,
+        createSimulation: context.createSimulation,
       }
     })
 
@@ -100,7 +100,7 @@ export function StepForm() {
 
     // console.log(finalData)
 
-    await createTransaction(finalData, reset)
+    await createSimulation(finalData, reset)
     reset()
   }
 

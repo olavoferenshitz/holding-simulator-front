@@ -30,6 +30,9 @@ export const SimulatorContainer = styled.div`
   @media (max-width: ${breakpoints.desktopWide}) {
     flex-direction: column;
   }
+  @media (max-width: ${breakpoints.tablet}) {
+    border-radius: 16px;
+  }
 `
 
 export const FormWrapper = styled.div`
@@ -119,6 +122,7 @@ export const TitleContainer = styled.div`
   }
 
   @media (max-width: ${breakpoints.tablet}) {
+    border-radius: 14px 14px 0 0;
     .title-wrapper {
       padding: 0 1rem;
 

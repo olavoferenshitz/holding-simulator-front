@@ -1,15 +1,23 @@
 import { ReactNode, useState, useEffect, useCallback } from 'react'
-import { serverApi } from '../lib/axios'
+import { googleSheetsEndpoint, serverApi } from '../lib/axios'
 import { createContext } from 'use-context-selector'
 import axios from 'axios'
+import { calculateResult } from '../utils/calculateResult'
+import { priceFormatter } from '../utils/formatter'
 
-interface StateTax {
-  estado: string
-  imposto: string
-  advogado: string
+export interface Result {
+  inventory: number
+  donation: number
+  saving: number
 }
 
-interface CreateTransactionInput {
+export interface StateTax {
+  estado: string
+  imposto: number
+  advogado: number
+}
+
+export interface CreateSimulationInput {
   name: string
   rentalProperty: 'sim' | 'nao' | ''
   state: string
@@ -23,92 +31,138 @@ interface CreateTransactionInput {
   contact: string
 }
 
+type PageType = 'HOME' | 'RESULT'
+
 interface SimulatorContextType {
-  transactions: StateTax[]
+  stateTaxes: StateTax[]
+  simulationData: CreateSimulationInput
+  resultData: Result
   currrentStep: number
   setCurrrentStep: (step: number) => void
-  fetchTransactions: (query?: string) => Promise<void>
-  createTransaction: (
-    data: CreateTransactionInput,
+  currrentPage: PageType
+  setCurrrentPage: (page: PageType) => void
+  createSimulation: (
+    data: CreateSimulationInput,
     reset: () => void,
   ) => Promise<void>
 }
 
-interface TransactionsProviderProps {
+interface SimulatorProviderProps {
   children: ReactNode
+}
+
+const initialInputValues: CreateSimulationInput = {
+  name: '',
+  rentalProperty: '',
+  state: '',
+  equityAmount: 0,
+  email: '',
+  rent: 0,
+  age: 0,
+  phone: 0,
+  hasChildren: '',
+  privacy: '',
+  contact: '',
+}
+
+const initialResultValues: Result = {
+  inventory: 0,
+  donation: 0,
+  saving: 0,
 }
 
 export const SimulatorContext = createContext({} as SimulatorContextType)
 
-export function SimulatorProvider({ children }: TransactionsProviderProps) {
+export function SimulatorProvider({ children }: SimulatorProviderProps) {
   const [stateTaxes, setStateTaxes] = useState<StateTax[]>([])
+  const [simulationData, setSimulationData] =
+    useState<CreateSimulationInput>(initialInputValues)
+  const [resultData, setResultData] = useState<Result>(initialResultValues)
   const [currrentStep, setCurrrentStep] = useState<number>(0)
+  const [currrentPage, setCurrrentPage] = useState<PageType>('HOME')
 
   useEffect(() => {
     fetchStateTaxes()
   }, [])
 
   const fetchStateTaxes = useCallback(async () => {
-    const response = await axios.get(
-      'https://script.googleusercontent.com/macros/echo?user_content_key=1dMeJ9Xdpnn2OxtSIImMxFPr_iF0Nl-b9FpPS3eQ1fCT9AGVM9w4hBGDoS8kr3N4OP5C2czH8YV5BzsD1ZuV1iptCwwcopXlm5_BxDlH2jW0nuo2oDemN9CCS2h10ox_1xSncGQajx_ryfhECjZEnKK6-uAYwnfC5TB9dlq_DShQWV38amHX9GcE2L4R-OCvvd32pPjzNjFmtE7zxT6rIDy-8zbrlm9nFc_KqrDZdBQlBoHUyqzulQ&lib=MCrq-EJWv4RozjKmUTCvWm4xUbCXvGgRQ',
-    )
+    const response = await axios.get(googleSheetsEndpoint)
 
     setStateTaxes(response.data)
   }, [])
 
-  const createTransaction = useCallback(
-    async (data: CreateTransactionInput, reset: () => void) => {
-      const {
+  async function createSimulation(
+    data: CreateSimulationInput,
+    reset: () => void,
+  ) {
+    const {
+      name,
+      rentalProperty,
+      state,
+      equityAmount,
+      email,
+      rent,
+      age,
+      phone,
+      hasChildren,
+      privacy,
+      contact,
+    } = data
+
+    setSimulationData(data)
+
+    const result = calculateResult(data, stateTaxes)
+
+    setResultData(result)
+
+    try {
+      await serverApi.post('/leads', {
         name,
+        rentalProperty,
+        state,
+        equityAmount: priceFormatter.format(equityAmount),
         email,
-        equityAmount,
-        rent,
+        rent: priceFormatter.format(rent),
         age,
         phone,
-        rentalProperty,
         hasChildren,
-        state,
-      } = data
+        privacy,
+        contact,
+        totalInventoryCost: priceFormatter.format(result.inventory),
+        totalDonationCost: priceFormatter.format(result.donation),
+        createdAt: new Date(),
+      })
 
-      try {
-        const response = await serverApi.post('/leads', {
-          name,
-          email,
-          equityAmount,
-          rent,
-          age,
-          phone,
-          rentalProperty,
-          hasChildren,
-          state,
-          createdAt: new Date(),
-        })
-
-        setStateTaxes((state) => [...state, response.data])
-      } catch (error: any) {
-        console.log(error.message)
-        if (
-          error.message === 'Network Error' ||
-          error.message.includes('status code 500')
-        ) {
-          alert('Estamos com problemas, tente novamente mais tarde.')
-        }
-
-        reset()
-        setCurrrentStep(0)
+      setCurrrentPage('RESULT')
+    } catch (error: any) {
+      console.log(error)
+      if (
+        error.message === 'Network Error' ||
+        error.message.includes('status code 500')
+      ) {
+        alert('Estamos com problemas, tente novamente mais tarde.')
       }
-    },
-    [],
-  )
+
+      if (error.code === 'ERR_BAD_REQUEST') {
+        alert(error.response.data.error)
+      }
+
+      setCurrrentStep(0)
+      reset()
+    }
+  }
 
   return (
     <SimulatorContext.Provider
       value={{
-        transactions: stateTaxes,
+        stateTaxes,
+        simulationData,
+        resultData,
         currrentStep,
         setCurrrentStep,
-        fetchTransactions: fetchStateTaxes,
-        createTransaction,
+        currrentPage,
+        setCurrrentPage,
+        createSimulation,
       }}
     >
       {children}
