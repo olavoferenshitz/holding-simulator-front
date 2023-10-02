@@ -94,7 +94,7 @@ export function SimulatorProvider({ children }: SimulatorProviderProps) {
     useState<CreateSimulationInput>(initialInputValues)
   const [resultData, setResultData] = useState<Result>(initialResultValues)
   const [currentStep, setCurrentStep] = useState<number>(0)
-  const [currrentPage, setCurrrentPage] = useState<PageType>('HOME')
+  const [currrentPage, setCurrrentPage] = useState<PageType>('RESULT')
 
   useEffect(() => {
     fetchStateTaxes()

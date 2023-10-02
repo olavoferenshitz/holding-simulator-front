@@ -4,7 +4,7 @@ import {
   HeadContainer,
   Title,
   Text,
-  WhatsappButton,
+  WhatsappLink,
 } from './styles'
 import { useContextSelector } from 'use-context-selector'
 import { SimulatorContext } from '../../contexts/SimulatorContext'
@@ -21,6 +21,11 @@ export function Result() {
       }
     },
   )
+
+  const positiveResult: string =
+    'https://api.whatsapp.com/send?phone=5567992089999&text=Oi,%20utilizei%20o%20Simulador%20de%20Holding%20e%20deu%20resultado%20positivo%20para%20a%20Holding%20Familiar.%20Gostaria%20de%20saber%20mais%20sobre.'
+  const negativeResult: string =
+    'https://api.whatsapp.com/send?phone=5567992089999&text=Oi,%20utilizei%20o%20Simulador%20de%20Holding%20e%20deu%20como%20resultado%20um%20poss%C3%ADvel%20testamento%20em%20vida%20com%20reserva%20de%20usufruto,%20doa%C3%A7%C3%A3o%20em%20vida,%20seguro%20de%20vida%20ou%20um%20plano%20de%20previd%C3%AAncia%20privada%20espec%C3%ADfico.%20Gostaria%20de%20saber%20mais%20sobre.'
 
   return (
     <Container>
@@ -100,7 +105,9 @@ export function Result() {
               tranquilo para todos que você ama. Sua família merece essa
               segurança.
             </Text>
-            <WhatsappButton>QUERO SER ATENDIDO</WhatsappButton>
+            <WhatsappLink href={positiveResult} target="_blank">
+              QUERO SER ATENDIDO
+            </WhatsappLink>
           </>
         ) : (
           <>
@@ -136,7 +143,9 @@ export function Result() {
               consulta e dê o primeiro passo em direção a uma vida protegida e
               tranquila.
             </Text>
-            <WhatsappButton>QUERO SER ATENDIDO</WhatsappButton>
+            <WhatsappLink href={negativeResult} target="_blank">
+              QUERO SER ATENDIDO
+            </WhatsappLink>
           </>
         )}
       </TextBody>

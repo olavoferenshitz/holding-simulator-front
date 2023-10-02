@@ -39,9 +39,12 @@ export const Text = styled.p`
   text-align: justify;
 `
 
-export const WhatsappButton = styled.button`
+export const WhatsappLink = styled.a`
   width: 100%;
   height: 58px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   border: 0;
   font-weight: bold;
   padding: 0 1.25rem;
@@ -51,6 +54,7 @@ export const WhatsappButton = styled.button`
   background-color: #008000;
   color: ${(props) => props.theme.white};
   transition: 0.2s;
+  text-decoration: none;
 
   &:hover {
     background-color: #0a630a;
