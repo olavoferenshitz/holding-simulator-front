@@ -23,7 +23,7 @@ function Input({ mask, prefix, ...props }: InputProps) {
   )
 
   return (
-    <Container>
+    <Container hasprefix={prefix ? 'true' : 'false'}>
       {prefix && <span className="prefix-span">{prefix}</span>}
       <input className="mask-input" required {...props} onKeyUp={handleKeyUp} />
     </Container>

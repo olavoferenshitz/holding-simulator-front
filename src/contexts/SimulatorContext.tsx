@@ -1,5 +1,9 @@
 import { ReactNode, useState, useEffect, useCallback } from 'react'
-import { googleSheetsEndpoint, serverApi } from '../lib/axios'
+import {
+  statesSheetsEndpoint,
+  serverApi,
+  holdingSheetsEndpoint,
+} from '../lib/axios'
 import { createContext } from 'use-context-selector'
 import axios from 'axios'
 import { calculateResult } from '../utils/calculateResult'
@@ -17,6 +21,11 @@ export interface StateTax {
   advogado: number
 }
 
+export interface HoldingSaving {
+  cartorio: number
+  holding: number
+}
+
 export interface CreateSimulationInput {
   name: string
   rentalProperty: 'sim' | 'nao' | ''
@@ -28,7 +37,6 @@ export interface CreateSimulationInput {
   phone: number
   hasChildren: string
   privacy: string
-  contact: string
 }
 
 type PageType = 'HOME' | 'RESULT'
@@ -36,9 +44,10 @@ type PageType = 'HOME' | 'RESULT'
 interface SimulatorContextType {
   stateTaxes: StateTax[]
   simulationData: CreateSimulationInput
+  holdingSaving: HoldingSaving
   resultData: Result
-  currrentStep: number
-  setCurrrentStep: (step: number) => void
+  currentStep: number
+  setCurrentStep: (step: number) => void
   currrentPage: PageType
   setCurrrentPage: (page: PageType) => void
   createSimulation: (
@@ -62,7 +71,6 @@ const initialInputValues: CreateSimulationInput = {
   phone: 0,
   hasChildren: '',
   privacy: '',
-  contact: '',
 }
 
 const initialResultValues: Result = {
@@ -71,24 +79,38 @@ const initialResultValues: Result = {
   saving: 0,
 }
 
+const initialHoldingValues: HoldingSaving = {
+  cartorio: 0,
+  holding: 0,
+}
+
 export const SimulatorContext = createContext({} as SimulatorContextType)
 
 export function SimulatorProvider({ children }: SimulatorProviderProps) {
   const [stateTaxes, setStateTaxes] = useState<StateTax[]>([])
+  const [holdingSaving, setHoldingSaving] =
+    useState<HoldingSaving>(initialHoldingValues)
   const [simulationData, setSimulationData] =
     useState<CreateSimulationInput>(initialInputValues)
   const [resultData, setResultData] = useState<Result>(initialResultValues)
-  const [currrentStep, setCurrrentStep] = useState<number>(0)
+  const [currentStep, setCurrentStep] = useState<number>(0)
   const [currrentPage, setCurrrentPage] = useState<PageType>('HOME')
 
   useEffect(() => {
     fetchStateTaxes()
+    fetchHoldingSaving()
   }, [])
 
   const fetchStateTaxes = useCallback(async () => {
-    const response = await axios.get(googleSheetsEndpoint)
+    const response = await axios.get(statesSheetsEndpoint)
 
     setStateTaxes(response.data)
+  }, [])
+
+  const fetchHoldingSaving = useCallback(async () => {
+    const response = await axios.get(holdingSheetsEndpoint)
+
+    setHoldingSaving(response.data[0])
   }, [])
 
   async function createSimulation(
@@ -106,12 +128,11 @@ export function SimulatorProvider({ children }: SimulatorProviderProps) {
       phone,
       hasChildren,
       privacy,
-      contact,
     } = data
 
     setSimulationData(data)
 
-    const result = calculateResult(data, stateTaxes)
+    const result = calculateResult(data, stateTaxes, holdingSaving)
 
     setResultData(result)
 
@@ -127,7 +148,6 @@ export function SimulatorProvider({ children }: SimulatorProviderProps) {
         phone,
         hasChildren,
         privacy,
-        contact,
         totalInventoryCost: priceFormatter.format(result.inventory),
         totalDonationCost: priceFormatter.format(result.donation),
         createdAt: new Date(),
@@ -147,7 +167,7 @@ export function SimulatorProvider({ children }: SimulatorProviderProps) {
         alert(error.response.data.error)
       }
 
-      setCurrrentStep(0)
+      setCurrentStep(0)
       reset()
     }
   }
@@ -156,10 +176,11 @@ export function SimulatorProvider({ children }: SimulatorProviderProps) {
     <SimulatorContext.Provider
       value={{
         stateTaxes,
+        holdingSaving,
         simulationData,
         resultData,
-        currrentStep,
-        setCurrrentStep,
+        currentStep,
+        setCurrentStep,
         currrentPage,
         setCurrrentPage,
         createSimulation,

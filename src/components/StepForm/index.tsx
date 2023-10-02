@@ -1,3 +1,4 @@
+import { MutableRefObject, useRef } from 'react'
 import {
   ButtonContainer,
   Content,
@@ -14,6 +15,7 @@ import { orderOptions, selectStyles } from '../../utils/react-select-options'
 import Input from '../Input'
 import Checkbox from '../Checkbox'
 import { parseCurrency } from '../../utils/formatter'
+import { handleDelay } from '../../utils/utils-methods'
 
 const newTransactionFormSchema = z.object({
   name: z.string(),
@@ -34,19 +36,23 @@ const newTransactionFormSchema = z.object({
   hasChildren: z.enum(['sim', 'nao', '']),
   state: z.string(),
   privacyBool: z.boolean(),
-  contactBool: z.boolean(),
 })
 type newTransactionFormInputs = z.infer<typeof newTransactionFormSchema>
 
 export function StepForm() {
-  const { currrentStep, setCurrrentStep, createSimulation } =
-    useContextSelector(SimulatorContext, (context) => {
+  const gridRef = useRef<HTMLDivElement | null>(
+    null,
+  ) as MutableRefObject<HTMLDivElement>
+  const { currentStep, setCurrentStep, createSimulation } = useContextSelector(
+    SimulatorContext,
+    (context) => {
       return {
-        currrentStep: context.currrentStep,
-        setCurrrentStep: context.setCurrrentStep,
+        currentStep: context.currentStep,
+        setCurrentStep: context.setCurrentStep,
         createSimulation: context.createSimulation,
       }
-    })
+    },
+  )
 
   const {
     control,
@@ -75,14 +81,12 @@ export function StepForm() {
       hasChildren,
       state,
       privacyBool,
-      contactBool,
     } = data
 
     const equityAmount = parseCurrency(equityAmountMask)
     const rent = parseCurrency(rentMask)
     const phone = Number(phoneMask.replace(/[\D\s]/g, ''))
     const privacy = privacyBool ? 'sim' : 'nao'
-    const contact = contactBool ? 'sim' : 'nao'
 
     const finalData = {
       name,
@@ -95,7 +99,6 @@ export function StepForm() {
       hasChildren,
       state,
       privacy,
-      contact,
     }
 
     // console.log(finalData)
@@ -124,20 +127,47 @@ export function StepForm() {
     return { firstStepValid: false, fields: watch }
   }
 
-  function handleNextStep() {
-    setCurrrentStep(currrentStep + 1)
+  async function handleNextStep() {
+    checkTranslateDirection('next', currentStep + 1)
   }
 
-  function handleBackStep() {
-    setCurrrentStep(currrentStep - 1)
+  async function handleBackStep() {
+    checkTranslateDirection('back', currentStep - 1)
+  }
+
+  async function checkTranslateDirection(
+    direction: string,
+    indexValue: number,
+  ) {
+    const modalElement = gridRef.current
+
+    modalElement.style.transform = `translateX(${
+      !direction.includes('next') ? '357px' : '-357px'
+    })`
+    modalElement.style.opacity = '0'
+
+    await handleDelay(200)
+
+    modalElement.style.transform = 'translateX(0px)'
+    setCurrentStep(indexValue)
+    modalElement.style.transform = `translateX(${
+      direction.includes('next') ? '357px' : '-357px'
+    })`
+
+    await handleDelay(200)
+
+    modalElement.style.opacity = '1'
+    modalElement.style.transform = 'translateX(0px)'
   }
 
   return (
-    <Content>
+    <Content ref={gridRef}>
       <form onSubmit={handleSubmit(handleCreateNewTransaction)}>
         <div
           className="step-container"
-          style={{ display: currrentStep === 0 ? 'flex' : 'none' }}
+          style={{
+            display: currentStep === 0 ? 'flex' : 'none',
+          }}
         >
           <Controller
             name="equityAmountMask"
@@ -147,7 +177,7 @@ export function StepForm() {
               <Input
                 mask="currency"
                 prefix="R$"
-                placeholder="Valor total do patrimnio atual"
+                placeholder="Valor total do patrimônio atual"
                 onChange={field.onChange}
               />
             )}
@@ -242,13 +272,15 @@ export function StepForm() {
 
         <div
           className="step-container"
-          style={{ display: currrentStep !== 0 ? 'flex' : 'none' }}
+          style={{
+            display: currentStep !== 0 ? 'flex' : 'none',
+          }}
         >
           <input
             type="text"
             placeholder="Informe seu nome"
             required
-            {...register('name')}
+            {...register('name', { required: true })}
           />
 
           <input
@@ -296,19 +328,6 @@ export function StepForm() {
             render={({ field }) => (
               <Checkbox
                 label="Aceito a Política de Privacidade."
-                checked={field.value}
-                onChange={field.onChange}
-              />
-            )}
-          />
-
-          <Controller
-            name="contactBool"
-            control={control}
-            defaultValue={true}
-            render={({ field }) => (
-              <Checkbox
-                label="Concordo em receber contato da equipe do Dr. Olavo Ferenshitz."
                 checked={field.value}
                 onChange={field.onChange}
               />

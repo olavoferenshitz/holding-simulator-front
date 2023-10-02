@@ -1,5 +1,25 @@
-import { styled } from 'styled-components'
+import { keyframes, styled } from 'styled-components'
 import { breakpoints } from '../../styles/breakpoints'
+
+const slideUp = keyframes`
+ from {
+    opacity: 0;
+    transform: translateY(-200px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0px);
+  }
+`
+
+const fade = keyframes`
+ from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+`
 
 export const Container = styled.div`
   width: 100%;
@@ -14,8 +34,6 @@ export const SimulatorContainer = styled.div`
   position: relative;
   display: flex;
   flex-direction: row;
-  justify-content: space-around;
-  align-items: center;
   background: ${(props) =>
     `linear-gradient(90deg, ${props.theme['gray-50']}, ${props.theme['gray-200']})`};
   backdrop-filter: blur(20px) saturate(70%);
@@ -26,6 +44,8 @@ export const SimulatorContainer = styled.div`
   min-height: 660px;
   margin: 2rem auto 4rem;
   z-index: 10;
+  animation: ${slideUp} 0.5s;
+  transition: 0.5s;
 
   @media (max-width: ${breakpoints.desktopWide}) {
     flex-direction: column;
@@ -44,6 +64,10 @@ export const FormWrapper = styled.div`
   justify-content: space-around;
   flex: 46;
   padding: 10px 70px;
+  opacity: 0;
+  animation: ${fade} 0.8s ease-out 0.8s forwards;
+  overflow: hidden;
+  margin: auto 0;
 
   @media (max-width: ${breakpoints.desktopWide}) {
     padding: 0.625rem 1.5rem 3rem;
@@ -56,7 +80,7 @@ export const FormWrapper = styled.div`
 
 export const TitleContainer = styled.div`
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
   flex: 36;
   border-radius: 24px 0 0 24px;
@@ -74,16 +98,20 @@ export const TitleContainer = styled.div`
     align-items: center;
     justify-content: center;
     margin: 0 auto;
-    padding: 0 1.5rem;
+    padding: 5rem 1.5rem 0;
 
     h1 {
       font-size: 2.5rem;
       color: ${(props) => props.theme['gray-100']};
+      opacity: 0;
+      animation: ${fade} 0.8s ease-out 0.2s forwards;
 
       span {
         font-size: 1.75rem;
         line-height: 1rem;
         color: ${(props) => props.theme['green-300']};
+        opacity: 0;
+        animation: ${fade} 0.8s ease-out 0.3s forwards;
       }
     }
 
@@ -91,11 +119,14 @@ export const TitleContainer = styled.div`
       font-size: 1.125rem;
       color: ${(props) => props.theme['gray-200']};
       padding: 2.5rem 0 0;
+      opacity: 0;
+      animation: ${fade} 0.8s ease-out 0.6s forwards;
     }
   }
 
   @media (max-width: ${breakpoints.desktopWide}) {
     flex: 15;
+    align-items: center;
     border-radius: 24px 24px 0 0;
     min-height: auto;
 

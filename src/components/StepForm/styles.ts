@@ -6,9 +6,12 @@ export const Content = styled.section`
   width: 100%;
   max-width: 42rem;
   border-radius: 6px;
+  transition: 0.2s;
 
   form {
     width: 100%;
+    min-height: 487px;
+    transition: 0.5s;
 
     .step-container {
       width: 100%;
@@ -106,7 +109,7 @@ export const Content = styled.section`
 export const ButtonContainer = styled.div`
   display: flex;
   gap: 1rem;
-  margin-top: 0.5rem;
+  margin-top: inherit;
 
   @media (max-width: ${breakpoints.tablet}) {
     flex-direction: column-reverse;
