@@ -86,9 +86,9 @@ export function Result() {
             )}
             {simulation.rent >= 30000 && (
               <Text>
-                Entendemos que com essa renda elevada de R$ XX não faz nenhum
-                sentido não ter um sistema de proteção patrimonial neste
-                momento.
+                Entendemos que com essa renda elevada de{' '}
+                {priceFormatter.format(simulation.rent)} não faz nenhum sentido
+                não ter um sistema de proteção patrimonial neste momento.
               </Text>
             )}
             <Text>
