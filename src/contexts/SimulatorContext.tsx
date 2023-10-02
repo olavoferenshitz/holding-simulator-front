@@ -1,4 +1,4 @@
-import { ReactNode, useState, useEffect, useCallback } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import {
   statesSheetsEndpoint,
   serverApi,
@@ -8,81 +8,20 @@ import { createContext } from 'use-context-selector'
 import axios from 'axios'
 import { calculateResult } from '../utils/calculateResult'
 import { priceFormatter } from '../utils/formatter'
-
-export interface Result {
-  inventory: number
-  donation: number
-  saving: number
-}
-
-export interface StateTax {
-  estado: string
-  imposto: number
-  advogado: number
-}
-
-export interface HoldingSaving {
-  cartorio: number
-  holding: number
-}
-
-export interface CreateSimulationInput {
-  name: string
-  rentalProperty: 'sim' | 'nao' | ''
-  state: string
-  equityAmount: number
-  email: string
-  rent: number
-  age: number
-  phone: number
-  hasChildren: string
-  privacy: string
-}
-
-type PageType = 'HOME' | 'RESULT'
-
-interface SimulatorContextType {
-  stateTaxes: StateTax[]
-  simulationData: CreateSimulationInput
-  holdingSaving: HoldingSaving
-  resultData: Result
-  currentStep: number
-  setCurrentStep: (step: number) => void
-  currrentPage: PageType
-  setCurrrentPage: (page: PageType) => void
-  createSimulation: (
-    data: CreateSimulationInput,
-    reset: () => void,
-  ) => Promise<void>
-}
-
-interface SimulatorProviderProps {
-  children: ReactNode
-}
-
-const initialInputValues: CreateSimulationInput = {
-  name: '',
-  rentalProperty: '',
-  state: '',
-  equityAmount: 0,
-  email: '',
-  rent: 0,
-  age: 0,
-  phone: 0,
-  hasChildren: '',
-  privacy: '',
-}
-
-const initialResultValues: Result = {
-  inventory: 0,
-  donation: 0,
-  saving: 0,
-}
-
-const initialHoldingValues: HoldingSaving = {
-  cartorio: 0,
-  holding: 0,
-}
+import {
+  CreateSimulationInput,
+  HoldingSaving,
+  Result,
+  SimulatorContextType,
+  SimulatorProviderProps,
+  StateTax,
+} from '../models/interfaces'
+import {
+  initialHoldingValues,
+  initialInputValues,
+  initialResultValues,
+} from '../utils/initial-values'
+import { PageType } from '../models/types'
 
 export const SimulatorContext = createContext({} as SimulatorContextType)
 

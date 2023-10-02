@@ -3,7 +3,7 @@ import {
   HoldingSaving,
   Result,
   StateTax,
-} from '../contexts/SimulatorContext'
+} from '../models/interfaces'
 
 export function calculateResult(
   simulation: CreateSimulationInput,

@@ -67,7 +67,7 @@ export function StepForm() {
   })
 
   const watchAllFields = watch()
-  const { firstStepValid } = checkFirstStep(watchAllFields)
+  const { firstStepValid, fields } = checkFirstStep(watchAllFields)
 
   async function handleCreateNewTransaction(data: newTransactionFormInputs) {
     const {
@@ -338,7 +338,10 @@ export function StepForm() {
             <button className="back-button" onClick={handleBackStep}>
               Voltar
             </button>
-            <button type="submit" disabled={isSubmitting || !isValid}>
+            <button
+              type="submit"
+              disabled={isSubmitting || !isValid || !fields.privacyBool}
+            >
               Concluir
             </button>
           </ButtonContainer>

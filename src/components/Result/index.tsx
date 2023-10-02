@@ -56,10 +56,10 @@ export function Result() {
               dos seus entes queridos.
             </Text>
             <Text>
-              Com nosso método comprovado, o Legado80, sua família pode
-              economizar impressionantes 80% em comparação com o tradicional
-              inventário. Imagine a segurança de proteger não apenas seu
-              patrimônio, mas também o futuro das gerações que virão.
+              Com nosso método comprovado, o Legado80, sua família vai
+              economizar mais de 80% em comparação com o tradicional inventário.
+              Imagine a segurança de proteger não apenas seu patrimônio, mas
+              também o futuro da sua geração.
             </Text>
             {simulation.age > 60 && (
               <Text>
