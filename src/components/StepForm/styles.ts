@@ -53,6 +53,9 @@ export const Content = styled.section`
       button[type='submit'],
       .next-button,
       .back-button {
+        display: flex;
+        align-items: center;
+        justify-content: center;
         width: 100%;
         height: 58px;
         border: 0;

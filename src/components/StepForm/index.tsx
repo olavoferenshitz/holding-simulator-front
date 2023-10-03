@@ -16,6 +16,7 @@ import Input from '../Input'
 import Checkbox from '../Checkbox'
 import { parseCurrency } from '../../utils/formatter'
 import { handleDelay } from '../../utils/utils-methods'
+import { SpinLoader } from '../SpinLoader'
 
 const newTransactionFormSchema = z.object({
   name: z.string(),
@@ -342,7 +343,7 @@ export function StepForm() {
               type="submit"
               disabled={isSubmitting || !isValid || !fields.privacyBool}
             >
-              Concluir
+              {isSubmitting ? <SpinLoader /> : 'Concluir'}
             </button>
           </ButtonContainer>
         </div>
