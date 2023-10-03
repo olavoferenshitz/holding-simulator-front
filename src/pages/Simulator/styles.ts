@@ -23,10 +23,10 @@ const fade = keyframes`
 
 export const Container = styled.div`
   width: 100%;
-  padding: 0 1.5rem 4rem;
+  padding: 0 1.5rem 2rem;
 
   @media (max-width: ${breakpoints.tablet}) {
-    padding: 0 1rem 4rem;
+    padding: 0 1rem 2rem;
   }
 `
 
@@ -49,6 +49,7 @@ export const SimulatorContainer = styled.div`
 
   @media (max-width: ${breakpoints.desktopWide}) {
     flex-direction: column;
+    margin: 2rem auto 2rem;
   }
   @media (max-width: ${breakpoints.tablet}) {
     border-radius: 16px;

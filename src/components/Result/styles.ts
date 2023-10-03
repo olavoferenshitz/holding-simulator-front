@@ -16,51 +16,6 @@ export const Container = styled.div`
   flex-direction: column;
 `
 
-export const TextBody = styled.div`
-  width: 100%;
-  max-width: 600px;
-  display: flex;
-  flex-direction: column;
-  margin: 4rem auto 3rem;
-  opacity: 0;
-  animation: ${fade} 0.8s ease-out 1s forwards;
-`
-
-export const Title = styled.h3`
-  font-size: 1.5rem;
-  color: ${(props) => props.theme['purple-500']};
-  text-align: center;
-  padding-bottom: 2rem;
-`
-
-export const Text = styled.p`
-  color: ${(props) => props.theme['gray-300']};
-  padding-bottom: 1rem;
-  text-align: justify;
-`
-
-export const WhatsappLink = styled.a`
-  width: 100%;
-  height: 58px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: 0;
-  font-weight: bold;
-  padding: 0 1.25rem;
-  border-radius: 6px;
-  margin: 2rem auto 0;
-  cursor: pointer;
-  background-color: #008000;
-  color: ${(props) => props.theme.white};
-  transition: 0.2s;
-  text-decoration: none;
-
-  &:hover {
-    background-color: #0a630a;
-  }
-`
-
 export const HeadContainer = styled.div`
   display: flex;
   align-items: center;
@@ -68,7 +23,6 @@ export const HeadContainer = styled.div`
   border-radius: 24px 24px 0 0;
   overflow: hidden;
   width: 100%;
-  min-height: inherit;
   background-color: ${(props) => props.theme['purple-500']};
   margin-bottom: 2rem;
 
@@ -129,5 +83,26 @@ export const HeadContainer = styled.div`
         padding: 1.25rem 0 1.5rem;
       }
     }
+  }
+`
+
+export const CommentsBody = styled.div`
+  width: 100%;
+  padding: 3rem 0 6rem;
+  border-top: 1px solid #4a5b6d4a;
+
+  @media (max-width: ${breakpoints.tablet}) {
+  }
+`
+
+export const CommentsTitle = styled.h4`
+  font-size: 2rem;
+  color: ${(props) => props.theme['gray-300']};
+  text-align: center;
+  padding: 2rem 0 3rem;
+
+  @media (max-width: ${breakpoints.tablet}) {
+    font-size: 1.25rem;
+    padding: 1.5rem 0 3rem;
   }
 `

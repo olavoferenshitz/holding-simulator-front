@@ -40,6 +40,7 @@ export const SummaryCard = styled.div<SumaryCardProps>`
   border-radius: 6px;
   padding: 1.5rem;
   opacity: 0;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 
   header {
     display: flex;
