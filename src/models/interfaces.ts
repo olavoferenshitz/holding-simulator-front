@@ -1,5 +1,6 @@
-import { ReactNode } from 'react'
-import { PageType } from './types'
+import { FormEvent, ReactNode } from 'react'
+import { Control, UseFormRegister } from 'react-hook-form'
+import { PageType, newTransactionFormInputs } from './types'
 
 export interface Result {
   inventory: number
@@ -48,4 +49,19 @@ export interface SimulatorContextType {
 
 export interface SimulatorProviderProps {
   children: ReactNode
+}
+
+export interface StepOneProps {
+  control: Control<newTransactionFormInputs>
+  firstStepValid: boolean
+  handleNextStep: (event: FormEvent) => void
+}
+
+export interface StepTwoProps {
+  control: Control<newTransactionFormInputs>
+  isSubmitting: boolean
+  isValid: boolean
+  fields: any
+  handleBackStep: (event: FormEvent) => void
+  register: UseFormRegister<newTransactionFormInputs>
 }

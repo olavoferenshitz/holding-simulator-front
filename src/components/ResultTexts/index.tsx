@@ -72,13 +72,10 @@ export function ResultTexts() {
             contabilidade terá um custo de aproximadamente R$ 150 por mês.
           </Text>
           <Text>
-            Não espere para proteger o que é seu. A Holding Familiar realizada
-            através do Método Legado80 é a chave para garantir um legado sólido
-            para sua família.
-          </Text>
-          <Text>
-            Agende agora para assegurar um futuro financeiro estável e tranquilo
-            para todos que você ama. Sua família merece essa segurança.
+            A Holding Familiar realizada através do Método Legado80 é a chave
+            para garantir um legado sólido para sua família. Para entender
+            melhor o seu resultado, clique abaixo para falar com um de nossos
+            especialistas.
           </Text>
           <WhatsappLink href={positiveResult} target="_blank">
             ENTENDER MELHOR MEU RESULTADO
@@ -114,9 +111,9 @@ export function ResultTexts() {
             futuro seguro para você e seus entes queridos.
           </Text>
           <Text>
-            Sua estabilidade patrimonial é nossa prioridade. Agende agora sua
-            consulta e dê o primeiro passo em direção a uma vida protegida e
-            tranquila.
+            Sua estabilidade patrimonial é nossa prioridade. Para entender
+            melhor o seu resultado, clique abaixo para falar com um de nossos
+            especialistas.
           </Text>
           <WhatsappLink href={negativeResult} target="_blank">
             ENTENDER MELHOR MEU RESULTADO

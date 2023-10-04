@@ -17,11 +17,13 @@ export const HeaderContent = styled.div`
 
   img {
     width: 250px;
+    height: 100px;
   }
 
   @media (max-width: ${breakpoints.desktop}) {
     img {
       width: 180px;
+      height: 73px;
     }
   }
 `
