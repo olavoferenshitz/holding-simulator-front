@@ -4,7 +4,7 @@ import { ButtonContainer } from './styles'
 import { SpinLoader } from '../SpinLoader'
 import Checkbox from '../Checkbox'
 import { StepTwoProps } from '../../models/interfaces'
-import olavoImg from '../../assets/olavo.png'
+import olavoImg from '../../assets/olavo.webp'
 
 export function StepTwo({
   control,

@@ -1,7 +1,7 @@
 import { AboutMeContainer, PictureContainer } from './styles'
 import { InstagramLogo } from 'phosphor-react'
 import { Picture } from '../Picture'
-import olavoImg from '../../assets/olavo.png'
+import olavoImg from '../../assets/olavo.webp'
 import { useInView } from 'react-intersection-observer'
 
 export function AboutMe() {
