@@ -3,6 +3,7 @@ import {
   statesSheetsEndpoint,
   serverApi,
   holdingSheetsEndpoint,
+  resultTextsEndpoint,
 } from '../lib/axios'
 import { createContext } from 'use-context-selector'
 import axios from 'axios'
@@ -12,6 +13,7 @@ import {
   CreateSimulationInput,
   HoldingSaving,
   Result,
+  ResultTextsModel,
   SimulatorContextType,
   SimulatorProviderProps,
   StateTax,
@@ -29,6 +31,7 @@ export function SimulatorProvider({ children }: SimulatorProviderProps) {
   const [stateTaxes, setStateTaxes] = useState<StateTax[]>([])
   const [holdingSaving, setHoldingSaving] =
     useState<HoldingSaving>(initialHoldingValues)
+  const [resultTexts, setResultTexts] = useState<ResultTextsModel[]>([])
   const [simulationData, setSimulationData] =
     useState<CreateSimulationInput>(initialInputValues)
   const [resultData, setResultData] = useState<Result>(initialResultValues)
@@ -38,6 +41,7 @@ export function SimulatorProvider({ children }: SimulatorProviderProps) {
   useEffect(() => {
     fetchStateTaxes()
     fetchHoldingSaving()
+    fetchResultTexts()
   }, [])
 
   const fetchStateTaxes = useCallback(async () => {
@@ -50,6 +54,12 @@ export function SimulatorProvider({ children }: SimulatorProviderProps) {
     const response = await axios.get(holdingSheetsEndpoint)
 
     setHoldingSaving(response.data[0])
+  }, [])
+
+  const fetchResultTexts = useCallback(async () => {
+    const response = await axios.get(resultTextsEndpoint)
+
+    setResultTexts(response.data)
   }, [])
 
   async function createSimulation(
@@ -116,6 +126,7 @@ export function SimulatorProvider({ children }: SimulatorProviderProps) {
       value={{
         stateTaxes,
         holdingSaving,
+        resultTexts,
         simulationData,
         resultData,
         currentStep,
