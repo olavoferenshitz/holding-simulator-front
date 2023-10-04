@@ -65,3 +65,7 @@ export interface StepTwoProps {
   handleBackStep: (event: FormEvent) => void
   register: UseFormRegister<newTransactionFormInputs>
 }
+
+export interface PictureProps {
+  imageSrc: string
+}

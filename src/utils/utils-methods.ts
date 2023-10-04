@@ -97,8 +97,6 @@ export async function handleCreateNewSimulation(
     privacy,
   }
 
-  console.log(finalData)
-
   await createSimulation(finalData, reset)
   reset()
 }
