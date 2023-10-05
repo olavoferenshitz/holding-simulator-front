@@ -99,6 +99,7 @@ export function SimulatorProvider({ children }: SimulatorProviderProps) {
         privacy,
         totalInventoryCost: priceFormatter.format(result.inventory),
         totalDonationCost: priceFormatter.format(result.donation),
+        totalHoldingSaving: priceFormatter.format(result.saving),
         createdAt: new Date(),
       })
 
