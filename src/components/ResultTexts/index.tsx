@@ -76,6 +76,9 @@ export function ResultTexts() {
             ) {
               return null
             } else {
+              if (index === 2 && simulation.age >= 30) {
+                return null
+              }
               return (
                 <Text key={`negative-text${index + 1}`}>
                   {negativeResult[`text${index + 1}` as keyof ResultTextsModel]}
