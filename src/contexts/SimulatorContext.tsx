@@ -102,8 +102,6 @@ export function SimulatorProvider({ children }: SimulatorProviderProps) {
       createdAt: new Date(),
     }
 
-    console.log(reqBody)
-
     try {
       await serverApi.post('/leads', reqBody)
 
