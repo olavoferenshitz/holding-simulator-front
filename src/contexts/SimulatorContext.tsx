@@ -85,23 +85,27 @@ export function SimulatorProvider({ children }: SimulatorProviderProps) {
 
     setResultData(result)
 
+    const reqBody = {
+      name,
+      rentalProperty,
+      state,
+      equityAmount: priceFormatter.format(equityAmount),
+      email,
+      rent: priceFormatter.format(rent),
+      age,
+      phone: String(phone),
+      hasChildren,
+      privacy,
+      totalInventoryCost: priceFormatter.format(result.inventory),
+      totalDonationCost: priceFormatter.format(result.donation),
+      totalHoldingSaving: priceFormatter.format(result.saving),
+      createdAt: new Date(),
+    }
+
+    console.log(reqBody)
+
     try {
-      await serverApi.post('/leads', {
-        name,
-        rentalProperty,
-        state,
-        equityAmount: priceFormatter.format(equityAmount),
-        email,
-        rent: priceFormatter.format(rent),
-        age,
-        phone,
-        hasChildren,
-        privacy,
-        totalInventoryCost: priceFormatter.format(result.inventory),
-        totalDonationCost: priceFormatter.format(result.donation),
-        totalHoldingSaving: priceFormatter.format(result.saving),
-        createdAt: new Date(),
-      })
+      await serverApi.post('/leads', reqBody)
 
       setCurrrentPage('RESULT')
     } catch (error: any) {

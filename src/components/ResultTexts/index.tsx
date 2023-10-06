@@ -41,7 +41,7 @@ export function ResultTexts() {
           {simulation.rentalProperty === 'sim' && (
             <Text>{positiveResult.text4}</Text>
           )}
-          {simulation.hasChildren === 'sim' && (
+          {simulation.hasChildren === 'nao' && (
             <Text>{positiveResult.text5}</Text>
           )}
           {simulation.rent >= 30000 && (
