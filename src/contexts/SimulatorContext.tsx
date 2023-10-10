@@ -105,6 +105,8 @@ export function SimulatorProvider({ children }: SimulatorProviderProps) {
     try {
       await serverApi.post('/leads', reqBody)
 
+      // await enviarWebhookParaBotConversa(reqBody)
+
       setCurrrentPage('RESULT')
     } catch (error: any) {
       console.log(error)
@@ -123,6 +125,25 @@ export function SimulatorProvider({ children }: SimulatorProviderProps) {
       reset()
     }
   }
+
+  // async function enviarWebhookParaBotConversa(leadData: any) {
+  //   try {
+  //     const webhookUrl =
+  //       'https://backend.botconversa.com.br/api/v1/webhooks-automation/catch/46150/B7W1qOiR0uFy/'
+
+  //     const dadosWebhook = {
+  //       nome: leadData.name,
+  //       email: leadData.email,
+  //       telefone: leadData.phone,
+  //     }
+
+  //     await axios.post(webhookUrl, dadosWebhook)
+
+  //     console.log('Webhook enviado com sucesso para BotConversa')
+  //   } catch (error) {
+  //     console.error('Erro ao enviar webhook para BotConversa:', error)
+  //   }
+  // }
 
   return (
     <SimulatorContext.Provider

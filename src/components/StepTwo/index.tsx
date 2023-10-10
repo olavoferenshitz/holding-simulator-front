@@ -1,5 +1,7 @@
 import { Controller } from 'react-hook-form'
-import Input from '../Input'
+import PhoneInput from 'react-phone-input-2'
+import 'react-phone-input-2/lib/bootstrap.css'
+import pt from 'react-phone-input-2/lang/pt.json'
 import { ButtonContainer } from './styles'
 import { SpinLoader } from '../SpinLoader'
 import Checkbox from '../Checkbox'
@@ -42,18 +44,30 @@ export function StepTwo({
         })}
       />
 
+      <p className="phone-label">Infome seu Whatsapp</p>
+
       <Controller
         name="phoneMask"
         control={control}
         defaultValue=""
         render={({ field }) => (
-          <Input
-            mask="phone"
-            placeholder="Infome seu telefone"
+          <PhoneInput
+            value={null}
+            country="br"
+            localization={pt}
             onChange={field.onChange}
+            inputProps={{
+              name: 'phone',
+              required: true,
+            }}
+            placeholder="Infome seu Whatsapp"
           />
         )}
       />
+
+      <p className="phone-disclaimer">
+        * Você receberá uma análise de resultado do simulador pelo WhatsApp
+      </p>
 
       <input
         type="text"

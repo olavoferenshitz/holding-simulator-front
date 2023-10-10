@@ -25,7 +25,21 @@ function Input({ mask, prefix, ...props }: InputProps) {
   return (
     <Container hasprefix={prefix ? 'true' : 'false'}>
       {prefix && <span className="prefix-span">{prefix}</span>}
-      <input className="mask-input" required {...props} onKeyUp={handleKeyUp} />
+      {mask === 'phone' ? (
+        <input
+          className="mask-input"
+          required
+          {...props}
+          onBlur={handleKeyUp}
+        />
+      ) : (
+        <input
+          className="mask-input"
+          required
+          {...props}
+          onKeyUp={handleKeyUp}
+        />
+      )}
     </Container>
   )
 }

@@ -28,8 +28,38 @@ export const Content = styled.section`
         padding: 1rem;
 
         &::placeholder {
-          color: ${(props) => props.theme['gray-500']};
+          color: ${(props) => props.theme['gray-300']};
         }
+      }
+
+      .phone-label {
+        font-weight: 600;
+        color: ${(props) => props.theme['gray-300']};
+        margin-bottom: -6px;
+      }
+
+      .phone-disclaimer {
+        font-size: 0.875rem;
+        font-weight: 600;
+        color: ${(props) => props.theme['gray-300']};
+      }
+
+      .form-control {
+        width: 100%;
+        padding-left: 4rem;
+
+        &:focus {
+          border-color: ${(props) => props.theme['green-500']};
+          outline: 0;
+          box-shadow: 0 0 0 2px ${(props) => props.theme['green-500']} !important;
+        }
+        &::placeholder {
+          color: ${(props) => props.theme['gray-300']} !important;
+        }
+      }
+
+      span.country-name {
+        color: ${(props) => props.theme['gray-300']};
       }
 
       .select-wrapper {

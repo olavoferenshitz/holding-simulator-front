@@ -9,12 +9,12 @@ export function currency(e: React.FormEvent<HTMLInputElement>) {
 }
 
 export function phone(e: React.FormEvent<HTMLInputElement>) {
-  e.currentTarget.maxLength = 15
+  e.currentTarget.maxLength = 17
   let value = e.currentTarget.value
 
   value = value.replace(/\D/g, '')
 
-  value = value.replace(/^(\d{2})(\d{5})(\d{4})$/, '($1) $2-$3')
+  value = value.replace(/^(\d{2})(\d{2})(\d{4,5})(\d{4})$/, '+$1 ($2) $3-$4')
 
   e.currentTarget.value = value
   return e

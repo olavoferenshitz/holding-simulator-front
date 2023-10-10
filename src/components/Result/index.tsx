@@ -1,3 +1,4 @@
+import { Helmet } from 'react-helmet'
 import { Container, HeadContainer, CommentsTitle, CommentsBody } from './styles'
 import { Sumary } from '../Sumary'
 import { Comments } from '../Comments'
@@ -7,6 +8,13 @@ import { AboutMe } from '../AboutMe'
 export function Result() {
   return (
     <Container>
+      <Helmet>
+        <script>
+          {`
+            gtag('event', 'conversion', {'send_to': 'AW-11353899419/_ZCdCIbFzuYYEJuD-6Uq'});
+          `}
+        </script>
+      </Helmet>
       <HeadContainer>
         <div className="title-wrapper">
           <h2>
