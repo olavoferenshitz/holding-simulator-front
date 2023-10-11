@@ -139,7 +139,7 @@ export function SimulatorProvider({ children }: SimulatorProviderProps) {
 
       await axios.post(webhookUrl, dadosWebhook)
 
-      console.log('Webhook enviado com sucesso para BotConversa')
+      // console.log('Webhook enviado com sucesso para BotConversa')
     } catch (error) {
       console.error('Erro ao enviar webhook para BotConversa:', error)
     }
