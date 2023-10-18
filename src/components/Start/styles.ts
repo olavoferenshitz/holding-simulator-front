@@ -24,6 +24,15 @@ export const FormWrapper = styled.div`
   overflow: hidden;
   margin: auto 0;
 
+  .privacy-button {
+    background-color: transparent;
+    color: ${(props) => props.theme['gray-300']};
+    text-decoration: underline;
+    margin-top: 24px;
+    border: 0;
+    cursor: pointer;
+  }
+
   @media (max-width: ${breakpoints.desktopWide}) {
     padding: 0.625rem 1.5rem 3rem;
   }
@@ -35,8 +44,9 @@ export const FormWrapper = styled.div`
 
 export const TitleContainer = styled.div`
   display: flex;
-  align-items: flex-start;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
   flex: 36;
   border-radius: 24px 0 0 24px;
   overflow: hidden;

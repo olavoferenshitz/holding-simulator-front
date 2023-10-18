@@ -8,7 +8,6 @@ import {
 import { createContext } from 'use-context-selector'
 import axios from 'axios'
 import { calculateResult } from '../utils/calculateResult'
-import { priceFormatter } from '../utils/formatter'
 import {
   CreateSimulationInput,
   HoldingSaving,
@@ -24,6 +23,10 @@ import {
   initialResultValues,
 } from '../utils/initial-values'
 import { PageType } from '../models/types'
+import {
+  createRequestBody,
+  sendDataToBotConversaWebhook,
+} from '../utils/utils-methods'
 
 export const SimulatorContext = createContext({} as SimulatorContextType)
 
@@ -66,41 +69,13 @@ export function SimulatorProvider({ children }: SimulatorProviderProps) {
     data: CreateSimulationInput,
     reset: () => void,
   ) {
-    const {
-      name,
-      rentalProperty,
-      state,
-      equityAmount,
-      email,
-      rent,
-      age,
-      phone,
-      hasChildren,
-      privacy,
-    } = data
-
     setSimulationData(data)
 
     const result = calculateResult(data, stateTaxes, holdingSaving)
 
     setResultData(result)
 
-    const reqBody = {
-      name,
-      rentalProperty,
-      state,
-      equityAmount: priceFormatter.format(equityAmount),
-      email,
-      rent: priceFormatter.format(rent),
-      age,
-      phone: String(phone),
-      hasChildren,
-      privacy,
-      totalInventoryCost: priceFormatter.format(result.inventory),
-      totalDonationCost: priceFormatter.format(result.donation),
-      totalHoldingSaving: priceFormatter.format(result.saving),
-      createdAt: new Date(),
-    }
+    const reqBody = createRequestBody(data, result)
 
     try {
       await serverApi.post('/leads', reqBody)
@@ -123,25 +98,6 @@ export function SimulatorProvider({ children }: SimulatorProviderProps) {
 
       setCurrentStep(0)
       reset()
-    }
-  }
-
-  async function sendDataToBotConversaWebhook(leadData: any) {
-    try {
-      const webhookUrl =
-        'https://backend.botconversa.com.br/api/v1/webhooks-automation/catch/65317/3cHphqAMrct6/'
-
-      const dadosWebhook = {
-        nome: leadData.name,
-        email: leadData.email,
-        telefone: leadData.phone,
-      }
-
-      await axios.post(webhookUrl, dadosWebhook)
-
-      // console.log('Webhook enviado com sucesso para BotConversa')
-    } catch (error) {
-      console.error('Erro ao enviar webhook para BotConversa:', error)
     }
   }
 

@@ -1,5 +1,7 @@
 import { StepForm } from '../StepForm'
+import * as Dialog from '@radix-ui/react-dialog'
 import { FormWrapper, TitleContainer } from './styles'
+import { PrivacyModal } from '../PrivacyModal'
 
 export function Start() {
   return (
@@ -22,6 +24,13 @@ export function Start() {
       </TitleContainer>
       <FormWrapper>
         <StepForm />
+        <Dialog.Root>
+          <Dialog.Trigger asChild>
+            <button className="privacy-button">Política de Privacidade</button>
+          </Dialog.Trigger>
+
+          <PrivacyModal />
+        </Dialog.Root>
       </FormWrapper>
     </>
   )
